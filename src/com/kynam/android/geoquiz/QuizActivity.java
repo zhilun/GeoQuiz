@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +22,8 @@ public class QuizActivity extends ActionBarActivity {
     private Button mNextButton;
     private Button mPreviousButton;
     private TextView mQuestionTextView;
+    
+    private static final String TAG = "QuizActivity";
     
     private TrueFalse[] mQuestionBank = new TrueFalse[] {
     	new TrueFalse(R.string.question_ocean, true),
@@ -54,6 +57,7 @@ public class QuizActivity extends ActionBarActivity {
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate(Bundle) called");
         setContentView(R.layout.activity_quiz);
         
         mQuestionTextView = (TextView)findViewById(R.id.question_text_view);
@@ -121,7 +125,32 @@ public class QuizActivity extends ActionBarActivity {
                     .commit();
         }*/
     }
-
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		Log.d(TAG, "onStart() called");
+	}
+	@Override
+	public void onPause() {
+		super.onPause();
+		Log.d(TAG, "onPause() called");
+	}
+	@Override
+	public void onResume() {
+		super.onResume();
+		Log.d(TAG, "onResume() called");
+	}
+	@Override
+	public void onStop() {
+		super.onStop();
+		Log.d(TAG, "onStop() called");
+	}
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		Log.d(TAG, "onDestroy() called");
+	}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
