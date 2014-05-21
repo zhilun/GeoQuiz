@@ -24,6 +24,7 @@ public class QuizActivity extends ActionBarActivity {
     private TextView mQuestionTextView;
     
     private static final String TAG = "QuizActivity";
+    private static final String KEY_INDEX = "index";
     
     private TrueFalse[] mQuestionBank = new TrueFalse[] {
     	new TrueFalse(R.string.question_ocean, true),
@@ -117,6 +118,10 @@ public class QuizActivity extends ActionBarActivity {
 			}
 		});
         
+        if (savedInstanceState != null) {
+        	mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+        }
+        
         updateQuestion();
 
         /*if (savedInstanceState == null) {
@@ -124,7 +129,16 @@ public class QuizActivity extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }*/
+        
+        
     }
+	
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+		super.onSaveInstanceState(savedInstanceState);
+		Log.i(TAG, "onSaveInstanceState");
+		savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
+	}
 	
 	@Override
 	public void onStart() {
