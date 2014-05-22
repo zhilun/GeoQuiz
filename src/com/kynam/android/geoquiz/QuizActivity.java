@@ -3,6 +3,7 @@ package com.kynam.android.geoquiz;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ public class QuizActivity extends ActionBarActivity {
     private Button mFalseButton;
     private Button mNextButton;
     private Button mPreviousButton;
+    private Button mCheatButton;
     private TextView mQuestionTextView;
     
     private static final String TAG = "QuizActivity";
@@ -69,6 +71,17 @@ public class QuizActivity extends ActionBarActivity {
 				// TODO Auto-generated method stub
 				mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
 				updateQuestion();
+			}
+		});
+        
+        mCheatButton = (Button)findViewById(R.id.cheat_button);
+        mCheatButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent(QuizActivity.this, CheatActivity.class);
+				startActivity(i);
 			}
 		});
                 
