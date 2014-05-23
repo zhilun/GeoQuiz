@@ -28,6 +28,7 @@ public class QuizActivity extends ActionBarActivity {
     private static final String TAG = "QuizActivity";
     private static final String KEY_INDEX = "index";
     
+    
     private TrueFalse[] mQuestionBank = new TrueFalse[] {
     	new TrueFalse(R.string.question_ocean, true),
     	new TrueFalse(R.string.question_mideast, false),
@@ -81,6 +82,8 @@ public class QuizActivity extends ActionBarActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Intent i = new Intent(QuizActivity.this, CheatActivity.class);
+				boolean answerIsTrue = mQuestionBank[mCurrentIndex].isTrueQuestion();
+				i.putExtra(CheatActivity.EXTRA_ANSWER_IS_TRUE, answerIsTrue);
 				startActivity(i);
 			}
 		});
