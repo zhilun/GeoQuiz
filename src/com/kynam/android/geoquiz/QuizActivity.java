@@ -28,6 +28,7 @@ public class QuizActivity extends ActionBarActivity {
     private static final String TAG = "QuizActivity";
     private static final String KEY_INDEX = "index";
     
+    
     private TrueFalse[] mQuestionBank = new TrueFalse[] {
     	new TrueFalse(R.string.question_ocean, true),
     	new TrueFalse(R.string.question_mideast, false),
@@ -37,6 +38,16 @@ public class QuizActivity extends ActionBarActivity {
     };
     
     private int mCurrentIndex = 0;
+    
+    private boolean mIsCheater;
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	if (data == null) {
+    		return;
+    	}
+    	mIsCheater = data.getBooleanExtra(CheatActivity.EXTRA_ANSWER_SHOWN, false);
+    }
     
     private void updateQuestion(){
     	int question = mQuestionBank[mCurrentIndex].getQuestion();
@@ -48,12 +59,16 @@ public class QuizActivity extends ActionBarActivity {
     	
     	int messageResID = 0;
     	
-    	if (userPressTrue == answerIsTrue) {
-    		messageResID = R.string.correct_toast;
+    	if (mIsCheater) {
+    		messageResID = R.string.judgment_toast;
     	} else {
-    		messageResID = R.string.incorrect_toast;
-    	}
     	
+	    	if (userPressTrue == answerIsTrue) {
+	    		messageResID = R.string.correct_toast;
+	    	} else {
+	    		messageResID = R.string.incorrect_toast;
+	    	}
+    	}
     	Toast.makeText(this, messageResID, Toast.LENGTH_SHORT).show();
     }
     
@@ -81,7 +96,9 @@ public class QuizActivity extends ActionBarActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Intent i = new Intent(QuizActivity.this, CheatActivity.class);
-				startActivity(i);
+				boolean answerIsTrue = mQuestionBank[mCurrentIndex].isTrueQuestion();
+				i.putExtra(CheatActivity.EXTRA_ANSWER_IS_TRUE, answerIsTrue);
+				startActivityForResult(i, 0);
 			}
 		});
                 
@@ -113,6 +130,7 @@ public class QuizActivity extends ActionBarActivity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+				mIsCheater = false;
 				updateQuestion();
 			}
 		});
